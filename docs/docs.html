@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Bitboard &ndash; API Documentation</title>
+    <link rel="stylesheet" href="/static/assets/default.css">
+    <link rel="icon" href="http://getfashable.com/assets/img/logos/favicon.png"/>
+</head>
+<body>
+    <div class="o-main-wrapper">
+        <div class="o-sidebar-spacer"></div>
+        <div class="o-main" id="general">
+            <header class="o-main-header">
+                <h1 class="c-api-name">API Documentation <span class="c-api-version">v1.0</span></h1>
+                <div class="c-api-description s-markdown s-markdown--main"><p><em><strong>Last generated:</strong> 2017-11-07 21:25:54.936550</em></p>
+<p><em>Take notes without pen and paper - use only bits</em></p>
+<h2 id="h-0">Basic idea</h2>
+<p><strong>BitBoard</strong> is (for now) just another web app for taking notes, but in the future it might turn into something more.</p>
+<p>For now, it allows organizing notes into nested categories, and formatting them using Markdown, but soon it could
+support multiple note types, inter-note links, suggested meta-information, smart search, visualization and a lot more.</p>
+<h2 id="h-1">Source code</h2>
+<p>The source code of the whole app is freely available on <a href="https://github.com/zjurelinac/Bitboard">Github</a>.</p>
+</div>
+            </header>
+            <div class="o-main-content">
+                
+                <section class="c-region" id="api">
+                    <header class="c-region-header">
+                        <div class="c-region-name">API</div>
+                        <div class="c-region-url">/api</div>
+                        <div class="c-region-description s-markdown"><p>Below are listed all available API routes together with detailed explanations of their purpose, parameters, response types and statuses, as well as potential errors.</p>
+</div>
+                    </header>
+                    <div class="c-region-routes">
+                        
+                        <div class="c-route" id="obtain_access_token">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Authenticate user</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--POST">POST</span>
+                                    <span class="c-route-call__path">/auth</span>
+                                    <span class="c-route-auth"></span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Authenticates user by his email/password combination and returns a JWT
+API access token (long-term, lasting 30 days), which should be sent in the
+Authorization HTTP header with each subsequent request.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">email</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's email address, used for password recovery, important communications and sending notifications about interesting updates.</p>
+<p><strong>Must be unique</strong>.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: johndoe@mail.com</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">password</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's password, used together with username for API access authentication.</p>
+<p><strong>Minimum length: 6 characters.</strong></p>
+</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>JSON response containing API <code>access_token</code> and
+                       <code>user_id</code></p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;access_token&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;user_id&quot;</span><span class="o">:</span> <span class="nx">integer</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthenticationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">Attempted action requires authorization, which has failed.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">MissingParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="register_user">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Register new user</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--POST">POST</span>
+                                    <span class="c-route-call__path">/users</span>
+                                    <span class="c-route-auth"></span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Creates a new user with given account data. When using the API in the future,
+the user should be authenticated with the API by his username/password
+combination.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">fullname</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's full name, first and last names combined.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: John Doe</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">email</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's email address, used for password recovery, important communications and sending notifications about interesting updates.</p>
+<p><strong>Must be unique</strong>.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: johndoe@mail.com</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">password</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's password, used together with username for API access authentication.</p>
+<p><strong>Minimum length: 6 characters.</strong></p>
+</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status"> 201</span>
+                                    <p>Success response</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;success&quot;</span><span class="o">:</span> <span class="nx">string</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">MissingParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">IntegrityViolationError</div>
+                                        <div class="c-route-error__code">409</div>
+                                    </div>
+                                    <div class="c-route-error__description">Database integrity violated.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="get_profile">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Get user profile</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--GET">GET</span>
+                                    <span class="c-route-call__path">/users/self</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Returns active user's profile informations, some of which are considered
+private <em>(eg. email)</em> and should not be shared  other users.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="o-no-items">No parameters.</div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>User profile data</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;fullname&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="o-no-items">No errors expected.</div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="edit_profile">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Edit user profile</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--PUT">PUT</span>
+                                    <span class="c-route-call__path">/users/self</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Modifies user's account data and returns the modified profile informations.</p>
+<p><strong>If any of the user's account properties is unchanged, it can be left out
+from the request</strong>.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">fullname</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's full name, first and last names combined.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: John Doe</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">email</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's email address, used for password recovery, important communications and sending notifications about interesting updates.</p>
+<p><strong>Must be unique</strong>.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: johndoe@mail.com</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">password</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>User's password, used together with username for API access authentication.</p>
+<p><strong>Minimum length: 6 characters.</strong></p>
+</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>User profile data (after modifications).</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;email&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;fullname&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">IntegrityViolationError</div>
+                                        <div class="c-route-error__code">409</div>
+                                    </div>
+                                    <div class="c-route-error__description">Database integrity violated.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="delete_profile">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Delete user profile</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--DELETE">DELETE</span>
+                                    <span class="c-route-call__path">/users/self</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Permanently deletes user's profile, together with all of his notes and
+categories.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="o-no-items">No parameters.</div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status"> 204</span>
+                                    <p>Empty response</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="o-no-items">No errors expected.</div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="list_notes">
+                            <header class="c-route-header">
+                                <div class="c-route-name">List/search notes</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--GET">GET</span>
+                                    <span class="c-route-call__path">/notes</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Returns a paginated list of user's own notes, optionally filtered by category.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">category</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Name of note's category</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Household</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">start</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Index of the first requested item.</p>
+</div>
+                                        
+                                            <div class="c-route-parameter__default">Default: 0</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">limit</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Amount of requested items to be returned in the response.</p>
+</div>
+                                        
+                                            <div class="c-route-parameter__default">Default: 20</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>User's notes</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;notes&quot;</span><span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;category&quot;</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+                    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;date_modified&quot;</span><span class="o">:</span> <span class="nx">Datetime</span><span class="p">,</span>
+                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+                <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="nx">string</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="o-no-items">No errors expected.</div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="add_note">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Create new note</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--POST">POST</span>
+                                    <span class="c-route-call__path">/notes</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Adds a new note to the user's board. Note's <code>content</code> can be Markdown-formatted.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">title</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Note's title, limited to <strong>255</strong> characters</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Shopping list</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">content</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Note's content, either plain text or Markdown-formatted. Unlimited length.</p>
+</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">category</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Name of note's category</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Household</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status"> 201</span>
+                                    <p>Success response</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;success&quot;</span><span class="o">:</span> <span class="nx">string</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">MissingParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="get_note">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Get note</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--GET">GET</span>
+                                    <span class="c-route-call__path">/notes/&lt;int:note_id&gt;</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Returns note contents and metadata. Contents, if in Markdown format, are
+returned raw, so that the client can parse them at will.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">note_id</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Unique note ID, used to identify it among all the others.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: 3241</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>Note content and info</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;category&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;content&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;date_created&quot;</span><span class="o">:</span> <span class="nx">Datetime</span><span class="p">,</span>
+        <span class="s2">&quot;date_modified&quot;</span><span class="o">:</span> <span class="nx">Datetime</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+        <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthorizationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">User not allowed to perform this operation.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="edit_note">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Edit note</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--PUT">PUT</span>
+                                    <span class="c-route-call__path">/notes/&lt;int:note_id&gt;</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Edits note content, title or category, and returns the updated
+representation.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">note_id</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Unique note ID, used to identify it among all the others.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: 3241</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">title</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Note's title, limited to <strong>255</strong> characters</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Shopping list</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">content</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Note's content, either plain text or Markdown-formatted. Unlimited length.</p>
+</div>
+                                        
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">category</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Name of note's category</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Household</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>Updated note content</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;category&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;content&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;date_created&quot;</span><span class="o">:</span> <span class="nx">Datetime</span><span class="p">,</span>
+        <span class="s2">&quot;date_modified&quot;</span><span class="o">:</span> <span class="nx">Datetime</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+        <span class="s2">&quot;title&quot;</span><span class="o">:</span> <span class="nx">string</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthorizationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">User not allowed to perform this operation.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="delete_note">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Delete existing note</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--DELETE">DELETE</span>
+                                    <span class="c-route-call__path">/notes/&lt;int:note_id&gt;</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Deletes an existing note and returns an empty response.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">note_id</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Unique note ID, used to identify it among all the others.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: 3241</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status"> 204</span>
+                                    <p>Empty response</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthorizationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">User not allowed to perform this operation.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="list_categories">
+                            <header class="c-route-header">
+                                <div class="c-route-name">List categories</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--GET">GET</span>
+                                    <span class="c-route-call__path">/categories</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Returns a list of all user's categories.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="o-no-items">No parameters.</div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>User's categories</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;categories&quot;</span><span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+                <span class="s2">&quot;parent&quot;</span><span class="o">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+                    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="o-no-items">No errors expected.</div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="add_category">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Create new category</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--POST">POST</span>
+                                    <span class="c-route-call__path">/categories</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Creates a new category for the user, can be either top-level or nested.
+<strong>Has to have a unique name.</strong></p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">name</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Category name, visible to the user.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Programming Tips & Tricks</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">parent</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Parent category's name, can be left empty if the category has no parent.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Computer Science</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status"> 201</span>
+                                    <p>Success response</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;success&quot;</span><span class="o">:</span> <span class="nx">string</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">MissingParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="get_category">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Get category</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--GET">GET</span>
+                                    <span class="c-route-call__path">/categories/&lt;int:category_id&gt;</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Returns basic category info together with the number of notes present in the
+category.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">category_id</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Unique category ID, used to identify it among all the others.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: 27</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>Category info</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;notes_count&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+        <span class="s2">&quot;parent&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="edit_category">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Edit category</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--PUT">PUT</span>
+                                    <span class="c-route-call__path">/categories/&lt;int:category_id&gt;</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Modifies category info and returns the updated representation.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">category_id</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Unique category ID, used to identify it among all the others.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: 27</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">name</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Category name, visible to the user.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Programming Tips & Tricks</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">parent</div>
+                                        <div class="c-route-parameter__type">string</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--o">optional</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Parent category's name, can be left empty if the category has no parent.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: Computer Science</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status">200</span>
+                                    <p>Updated category info</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        <div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;data&quot;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span>
+        <span class="s2">&quot;notes_count&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+        <span class="s2">&quot;parent&quot;</span><span class="o">:</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="o">:</span> <span class="nx">integer</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="nx">string</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthorizationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">User not allowed to perform this operation.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">BadParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="c-route" id="delete_category">
+                            <header class="c-route-header">
+                                <div class="c-route-name">Delete category</div>
+                                <div class="c-route-call">
+                                    <span class="c-route-call__method c-route-call__method--DELETE">DELETE</span>
+                                    <span class="c-route-call__path">/categories/&lt;int:category_id&gt;</span>
+                                    <span class="c-route-auth">JWT</span>
+                                </div>
+                            </header>
+                            <div class="c-route-description s-markdown"><p>Deletes existing category and returns an empty response.</p>
+</div>
+                            <div class="c-route-parameters">
+                                <h3>Parameters</h3>
+                                
+                                <div class="c-route-parameter">
+                                    <div class="c-route-parameter__main">
+                                        <div class="c-route-parameter__name">category_id</div>
+                                        <div class="c-route-parameter__type">integer</div>
+                                        
+                                            <div class="c-route-parameter__required c-route-parameter__required--r">required</div>
+                                        
+                                    </div>
+                                    <div class="c-route-parameter__extra">
+                                        <div class="c-route-parameter__description"><p>Unique category ID, used to identify it among all the others.</p>
+</div>
+                                        
+                                        
+                                            <div class="c-route-parameter__example">Example: 27</div>
+                                        
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="c-route-response">
+                                <h3>Response</h3>
+                                <div class="c-route-response__description">
+                                    <span class="c-route-response__status"> 204</span>
+                                    <p>Empty response</p>
+
+                                </div>
+                                <div class="c-route-response__content">
+                                    <div class="c-route-response__content-type">application/json</div>
+                                    
+                                        
+                                    
+                                </div>
+                            </div>
+                            <div class="c-route-errors">
+                                <h3>Errors</h3>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthorizationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">User not allowed to perform this operation.</div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </section>
+                
+            </div>
+        </div>
+        <div class="o-sidebar">
+            <div class="o-sidebar-top">
+                <div class="o-sidebar-logo">
+                    <img class="o-sidebar-logo__img" src="/static/logo.png">
+                    <div class="o-sidebar-logo__text">
+                        <div class="o-sidebar-logo__title">Bitboard</div>
+                        <div class="o-sidebar-logo__subtitle">API Documentation</div>
+                    </div>
+                </div>
+                <form class="o-sidebar-search-wrapper" method="post">
+                    <input type="text" name="search" placeholder="Search" class="o-sidebar-search">
+                </form>
+            </div>
+
+            <nav class="o-sidebar-nav">
+                <div class="o-nav-section">
+                    <div class="o-nav-section__name"><a href="#general">General</a></div>
+                    <ul class="o-nav-section-items">
+                        <li class="o-nav-section-item"><a href="#h-0">Basic idea</a></li>
+<li class="o-nav-section-item"><a href="#h-1">Source code</a></li>
+                    </ul>
+                </div>
+                
+                <div class="o-nav-section">
+                    <div class="o-nav-section__name">
+                        <a href="#api">API</a>
+                    </div>
+                    <ul class="o-nav-section-items">
+                         
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#obtain_access_token">
+                                <span class="c-region-route__method c-region-route__method--POST">POST</span>
+                                <span class="c-region-route__name">Authenticate user</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#register_user">
+                                <span class="c-region-route__method c-region-route__method--POST">POST</span>
+                                <span class="c-region-route__name">Register new user</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#get_profile">
+                                <span class="c-region-route__method c-region-route__method--GET">GET</span>
+                                <span class="c-region-route__name">Get user profile</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#edit_profile">
+                                <span class="c-region-route__method c-region-route__method--PUT">PUT</span>
+                                <span class="c-region-route__name">Edit user profile</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#delete_profile">
+                                <span class="c-region-route__method c-region-route__method--DELETE">DELETE</span>
+                                <span class="c-region-route__name">Delete user profile</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#list_notes">
+                                <span class="c-region-route__method c-region-route__method--GET">GET</span>
+                                <span class="c-region-route__name">List/search notes</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#add_note">
+                                <span class="c-region-route__method c-region-route__method--POST">POST</span>
+                                <span class="c-region-route__name">Create new note</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#get_note">
+                                <span class="c-region-route__method c-region-route__method--GET">GET</span>
+                                <span class="c-region-route__name">Get note</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#edit_note">
+                                <span class="c-region-route__method c-region-route__method--PUT">PUT</span>
+                                <span class="c-region-route__name">Edit note</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#delete_note">
+                                <span class="c-region-route__method c-region-route__method--DELETE">DELETE</span>
+                                <span class="c-region-route__name">Delete existing note</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#list_categories">
+                                <span class="c-region-route__method c-region-route__method--GET">GET</span>
+                                <span class="c-region-route__name">List categories</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#add_category">
+                                <span class="c-region-route__method c-region-route__method--POST">POST</span>
+                                <span class="c-region-route__name">Create new category</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#get_category">
+                                <span class="c-region-route__method c-region-route__method--GET">GET</span>
+                                <span class="c-region-route__name">Get category</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#edit_category">
+                                <span class="c-region-route__method c-region-route__method--PUT">PUT</span>
+                                <span class="c-region-route__name">Edit category</span>
+                            </a>
+                        </li>
+                        
+                         <li class="o-nav-section-item c-region-route">
+                            <a href="#delete_category">
+                                <span class="c-region-route__method c-region-route__method--DELETE">DELETE</span>
+                                <span class="c-region-route__name">Delete category</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+</body>
+</html>
