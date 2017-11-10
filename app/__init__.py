@@ -4,7 +4,7 @@ from east.database import EastSqliteDatabase
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
-db = EastSqliteDatabase('store.db')
+db = EastSqliteDatabase(app.config['DATABASE'])
 
 from east import East
 from east.security import JWT

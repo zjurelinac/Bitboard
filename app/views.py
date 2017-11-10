@@ -6,10 +6,15 @@ from east.security import *
 
 from app import app, east
 from app.models import User, Note, Category
-from app.util import StringValidator, Image, Success, NoResponse
+from app.util import StringValidator, Success, NoResponse
 
+
+east.register_validator('fullname', StringValidator(min_length=3, max_length=255))
 east.register_validator('email', StringValidator(max_length=256, pattern=r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'))
 east.register_validator('password', StringValidator(min_length=6))
+
+east.register_validator('title', StringValidator(min_length=1, max_length=255))
+east.register_validator('name', StringValidator(min_length=1, max_length=64))
 
 api = Blueprint('api', __name__)
 
@@ -54,38 +59,6 @@ def register_user(fullname: str, email: str, password: str) -> Success:
     user = User.create(fullname=fullname, email=email,
                        password_hash=make_password_hash(password))
     return 'User successfully created.', 201, {'Location': '/api/users/%d' % user.id}
-
-
-# @east.route(api, '/users', method='GET', auth='JWT')
-# def list_users(query: str = None, start: int = 0,
-#                limit: int = 50) -> JSON([User], view='search'):
-#     """
-#     List/Search users
-
-#     Returns a paginated list of all users whose fullname contains the `query`
-#     string, or all users if `query` not specified.
-
-#     @exceptions: BadParameterError
-#     @response_description: A list of users satisfying search criterions
-#     """
-#     partial = User.select() #.where(User.id != active_user().id)
-#     if query is not None:
-#         partial = partial.where(User.fullname ** ('%%%s%%' % query
-#                                                   if query is not None else ''))
-#     return partial.limit(limit).offset(start)
-
-
-# @east.route(api, '/users/<int:user_id>', method='GET', auth='JWT')
-# def get_user_wall(user_id) -> JSON(User, view='wall'):
-#     """
-#     Get user wall
-
-#     Returns user's wall info - his name and (number + titles) of his public notes.
-
-#     @exceptions: DoesNotExistError
-#     @response_description: User wall info
-#     """
-#     return User.get(User.id == user_id)
 
 
 @east.route(api, '/users/self', method='GET', auth='JWT')
@@ -141,108 +114,15 @@ def delete_profile() -> NoResponse:
 
 
 @east.route(api, '/notes', method='GET', auth='JWT')
-def list_notes(category: str = None, start: int = 0, limit: int = 20) -> JSON([Note], view='excerpt'):
+def list_all_notes(start: int = 0, limit: int = 20) -> JSON([Note], view='excerpt'):
     """
-    List/search notes
+    List notes
 
-    Returns a paginated list of user's own notes, optionally filtered by category.
+    Returns a paginated list of user's own notes.
 
     @response_description: User's notes
     """
-    partial = Note.select().where(Note._author == active_user())
-
-    if category is not None:
-        category = Category.get(Category.name == category)
-        partial = partial.where(Note._category == category)
-
-    return partial.offset(start).limit(limit)
-
-
-@east.route(api, '/notes', method='POST', auth='JWT')
-def add_note(title: str, content: str, category: str) -> Success:
-    """
-    Create new note
-
-    Adds a new note to the user's board. Note's `content` can be Markdown-formatted.
-
-    @exceptions: BadParameterError, MissingParameterError, DoesNotExistError
-    @response_status: 201
-    """
-    category = Category.get(Category.name == category)
-
-    note = Note.create(title=title, content=content, _category=category,
-                       _author=active_user(), date_created=datetime.now(),
-                       date_modified=datetime.now())
-    return 'Note successfully added', 201, {'Location': '/api/notes/%d' % note.id}
-
-
-@east.route(api, '/notes/<int:note_id>', method='GET', auth='JWT')
-def get_note(note_id) -> JSON(Note, view='full'):
-    """
-    Get note
-
-    Returns note contents and metadata. Contents, if in Markdown format, are
-    returned raw, so that the client can parse them at will.
-
-    @exceptions: AuthorizationError, DoesNotExistError
-    @response_description: Note content and info
-    """
-    note = Note.get(Note.id == note_id)
-
-    if note._author != active_user():
-        raise AuthorizationError('Not allowed to access this note.')
-
-    return note
-
-
-@east.route(api, '/notes/<int:note_id>', method='PUT', auth='JWT')
-def edit_note(note_id, title: str = None, content: str = None,
-              category: str = None) -> JSON(Note, view='full'):
-    """
-    Edit note
-
-    Edits note content, title or category, and returns the updated
-    representation.
-
-    @exceptions: AuthorizationError, DoesNotExistError, BadParameterError
-    @response_description: Updated note content
-    """
-    note = Note.get(Note.id == note_id)
-
-    if note._author != active_user():
-        raise AuthorizationError('Not allowed to access this note.')
-
-    new_values = {
-        'title': title, 'content': content,
-        '_category': Category.get(Category.name == category)
-                    if category is not None else None,
-        'date_modified': datetime.now()
-    }
-
-    (Note.update(**{k: v for k, v in new_values.items() if v is not None})
-     .where(Note.id == note_id).execute())
-
-    return Note.get(Note.id == note_id)
-
-
-@east.route(api, '/notes/<int:note_id>', method='DELETE', auth='JWT')
-def delete_note(note_id) -> NoResponse:
-    """
-    Delete existing note
-
-    Deletes an existing note and returns an empty response.
-
-    @exceptions: AuthorizationError, DoesNotExistError
-    @response_status: 204
-    """
-    note = Note.get(Note.id == note_id)
-
-    if note._author != active_user():
-        raise AuthorizationError('Not allowed to access this note.')
-
-    Note.delete().where(Note.id == note_id).execute()
-
-    return '', 204
+    return Note.select().where(Note._author == active_user()).offset(start).limit(limit)
 
 
 @east.route(api, '/categories', method='GET', auth='JWT')
@@ -265,7 +145,7 @@ def add_category(name: str, parent: str = None) -> Success:
     Creates a new category for the user, can be either top-level or nested.
     **Has to have a unique name.**
 
-    @exceptions: MissingParameterError, BadParameterError
+    @exceptions: BadParameterError, DoesNotExistError, MissingParameterError
     @response_status: 201
     """
     if parent is not None:
@@ -275,37 +155,37 @@ def add_category(name: str, parent: str = None) -> Success:
     return 'Category successfuly created.', 201, {'Location': '/api/categories/%d' % category.id}
 
 
-@east.route(api, '/categories/<int:category_id>', method='GET', auth='JWT')
-def get_category(category_id) -> JSON(Category, view='full'):
+@east.route(api, '/categories/<string:category_name>', method='GET', auth='JWT')
+def get_category(category_name) -> JSON(Category, view='full'):
     """
     Get category
 
     Returns basic category info together with the number of notes present in the
     category.
 
-    @exceptions: DoesNotExistError
+    @exceptions: AuthorizationError, DoesNotExistError
     @response_description: Category info
     """
-    category = Category.get(Category.id == category_id)
+    category = Category.get(Category.name == category_name)
 
     if category.owner != active_user():
         raise AuthorizationError('Not allowed to access this category.')
 
-    return Category.get(Category.id == category_id)
+    return category
 
 
-@east.route(api, '/categories/<int:category_id>', method='PUT', auth='JWT')
-def edit_category(category_id, name: str = None,
+@east.route(api, '/categories/<string:category_name>', method='PUT', auth='JWT')
+def edit_category(category_name, name: str = None,
                   parent: str = None) -> JSON(Category, view='full'):
     """
     Edit category
 
     Modifies category info and returns the updated representation.
 
-    @exceptions: AuthorizationError, DoesNotExistError, BadParameterError
+    @exceptions: AuthorizationError, BadParameterError, DoesNotExistError
     @response_description: Updated category info
     """
-    category = Category.get(Category.id == category_id)
+    category = Category.get(Category.name == category_name)
 
     if category.owner != active_user():
         raise AuthorizationError('Not allowed to access this category.')
@@ -317,13 +197,13 @@ def edit_category(category_id, name: str = None,
     }
 
     (Category.update(**{k: v for k, v in new_values.items() if v is not None})
-     .where(Category.id == category_id).execute())
+     .where(Category.id == category.id).execute())
 
-    return Category.get(Category.id == category_id)
+    return Category.get(Category.id == category.id)
 
 
-@east.route(api, '/categories/<int:category_id>', method='DELETE', auth='JWT')
-def delete_category(category_id) -> NoResponse:
+@east.route(api, '/categories/<string:category_name>', method='DELETE', auth='JWT')
+def delete_category(category_name) -> NoResponse:
     """
     Delete category
 
@@ -332,15 +212,118 @@ def delete_category(category_id) -> NoResponse:
     @exceptions: AuthorizationError
     @response_status: 204
     """
-    category = Category.get(Category.id == category_id)
+    category = Category.get(Category.name == category_name)
 
     if category.owner != active_user():
         raise AuthorizationError('Not allowed to access this category.')
 
-    Category.delete().where(Category.id == category_id).execute()
+    Category.delete().where(Category.id == category.id).execute()
 
     return '', 204
 
+
+@east.route(api, '/categories/<string:category_name>/notes', method='GET', auth='JWT')
+def list_category_notes(category_name, start: int = 0, limit: int = 20) -> JSON([Note], view='excerpt'):
+    """
+    List category notes
+
+    Returns a paginated list of notes belonging to the category.
+
+    @exceptions: AuthorizationError, DoesNotExistError
+    @response_description: Notes belonging to the category
+    """
+    category = Category.get(Category.name == category_name)
+
+    if category.owner != active_user():
+        raise AuthorizationError('Not allowed to access this category.')
+
+    return Note.select().where((Note._author == active_user()) & (Note._category == category))
+
+
+@east.route(api, '/categories/<string:category_name>/notes', method='POST', auth='JWT')
+def add_note(category_name, title: str, content: str) -> Success:
+    """
+    Create new note
+
+    Adds a new note to the user's board. Note's `content` can be Markdown-formatted.
+
+    @exceptions: BadParameterError, DoesNotExistError, MissingParameterError
+    @response_status: 201
+    """
+    category = Category.get(Category.name == category_name)
+    note = Note.create(title=title, content=content, _category=category,
+                       _author=active_user(), date_created=datetime.now(),
+                       date_modified=datetime.now())
+    return 'Note successfully added', 201, {'Location': '/api/notes/%d' % note.id}
+
+
+@east.route(api, '/categories/<string:category_name>/notes/<int:note_id>', method='GET', auth='JWT')
+def get_note(category_name, note_id) -> JSON(Note, view='full'):
+    """
+    Get note
+
+    Returns note contents and metadata. Contents, if in Markdown format, are
+    returned raw, so that the client can parse them at will.
+
+    @exceptions: AuthorizationError, DoesNotExistError
+    @response_description: Note content and info
+    """
+    note = Note.get(Note.id == note_id)
+
+    if note._author != active_user():
+        raise AuthorizationError('Not allowed to access this note.')
+
+    return note
+
+
+@east.route(api, '/categories/<string:category_name>/notes/<int:note_id>', method='PUT', auth='JWT')
+def edit_note(category_name, note_id, title: str = None, content: str = None,
+              category: str = None) -> JSON(Note, view='full'):
+    """
+    Edit note
+
+    Edits note content, title or category, and returns the updated
+    representation.
+
+    @exceptions: AuthorizationError, BadParameterError, DoesNotExistError
+    @response_description: Updated note content
+    """
+    note = Note.get(Note.id == note_id)
+
+    if note._author != active_user():
+        raise AuthorizationError('Not allowed to access this note.')
+
+    new_values = {
+        'title': title, 'content': content,
+        '_category': Category.get(Category.name == category)
+                    if category is not None else None,
+        'date_modified': datetime.now()
+    }
+
+    (Note.update(**{k: v for k, v in new_values.items() if v is not None})
+     .where(Note.id == note_id).execute())
+
+    return Note.get(Note.id == note_id)
+
+
+@east.route(api, '/categories/<string:category_name>/notes/<int:note_id>', method='DELETE', auth='JWT')
+def delete_note(category_name, note_id) -> NoResponse:
+    """
+    Delete existing note
+
+    Deletes an existing note and returns an empty response.
+
+    @exceptions: AuthorizationError, DoesNotExistError
+    @response_status: 204
+    """
+    note = Note.get(Note.id == note_id)
+
+    if note._author != active_user():
+        raise AuthorizationError('Not allowed to access this note.')
+
+    Note.delete().where(Note.id == note_id).execute()
+
+    return '', 204
 
 ################################################################################
 
@@ -369,8 +352,8 @@ if app.config['EAST_GENERATE_API_DOCS']:
     east.document_parameter('content', str, 'Note\'s content, either plain text or Markdown-formatted. Unlimited length.')
     east.document_parameter('category', str, 'Name of note\'s category', example='Household')
 
-    east.document_parameter('category_id', int, 'Unique category ID, used to identify it among all the others.', example='27')
-    east.document_parameter('name', str, 'Category name, visible to the user.', example='Programming Tips & Tricks')
+    east.document_parameter('category_name', int, 'Unique category name', location='path', example='School')
+    east.document_parameter('name', str, 'Category name, visible to the user. **Maximum length: 64 characters.**', example='Programming Tips & Tricks')
     east.document_parameter('parent', str, 'Parent category\'s name, can be left empty if the category has no parent.', example='Computer Science')
 
     east.register_exceptions([IntegrityViolationError, ValueNotUniqueError,

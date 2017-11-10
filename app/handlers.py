@@ -8,7 +8,14 @@ from east.exceptions import *
 
 from app import app, db
 
-logger = logging.getLogger(__name__)
+print('TESTING')
+class DummyLogger:
+    def log(self, *args):
+        pass
+    def error(self, *args):
+        pass
+logger = DummyLogger()
+#    logger = logging.getLogger(__name__)
 
 
 @app.errorhandler(BaseAPIException)

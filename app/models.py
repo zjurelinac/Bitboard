@@ -17,7 +17,6 @@ class BBModel(EastModel):
 class User(BBModel):
     fullname = CharField(max_length=255)
     email = CharField(max_length=256, unique=True)
-    profile_image = CharField(max_length=2048, null=True)
     password_hash = CharField()
 
     __serialization__ = {
@@ -44,7 +43,6 @@ class Category(BBModel):
     name = CharField(max_length=64, unique=True)
     _parent = ForeignKeyField(DeferredCategory, related_name='children', null=True)
     owner = ForeignKeyField(User, related_name='categories', on_delete='CASCADE')
-    # color = CharField(max_length=6, null=True)
 
     __serialization__ = {
         'basic': ['id', 'name'],
@@ -71,8 +69,6 @@ class Note(BBModel):
     _category = ForeignKeyField(Category, related_name='notes', on_delete='CASCADE')
     date_created = DateTimeField()
     date_modified = DateTimeField()
-    # access = IntegerField()
-    # note_type =
 
     __serialization__ = {
         'excerpt': ['id', 'title', 'category', 'date_modified'],

@@ -4,10 +4,12 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+API	../tests.py	/^class API:$/;"	kind:class	line:39
 APIFeatureNotImplemented	../east/east/exceptions.py	/^class APIFeatureNotImplemented(BaseAPIException):$/;"	kind:class	line:55
 APIInternalError	../east/east/exceptions.py	/^class APIInternalError(BaseAPIException):$/;"	kind:class	line:61
 APIMethodNotAllowed	../east/east/exceptions.py	/^class APIMethodNotAllowed(BaseAPIException):$/;"	kind:class	line:49
 APIRouteDoesNotExist	../east/east/exceptions.py	/^class APIRouteDoesNotExist(BaseAPIException):$/;"	kind:class	line:43
+APITest	../tests.py	/^class APITest(unittest.TestCase):$/;"	kind:class	line:81
 APPLICATION_ROOT	../app/config.py	/^APPLICATION_ROOT = '\/'$/;"	kind:variable	line:5
 AuthenticationError	../east/east/exceptions.py	/^class AuthenticationError(JWTException):$/;"	kind:class	line:128
 AuthorizationError	../east/east/exceptions.py	/^class AuthorizationError(BaseAPIException):$/;"	kind:class	line:140
@@ -16,15 +18,16 @@ BBModel	../app/models.py	/^class BBModel(EastModel):$/;"	kind:class	line:10
 BadParameterError	../east/east/exceptions.py	/^class BadParameterError(BaseAPIException):$/;"	kind:class	line:79
 BaseAPIException	../east/east/exceptions.py	/^class BaseAPIException(Exception):$/;"	kind:class	line:14
 CONFIG_DEFAULTS	../east/east/security.py	/^    CONFIG_DEFAULTS = {$/;"	kind:variable	line:34
-Category	../app/models.py	/^class Category(BBModel):$/;"	kind:class	line:43
+Category	../app/models.py	/^class Category(BBModel):$/;"	kind:class	line:42
+DATABASE	../app/config.py	/^DATABASE = 'store.db'$/;"	kind:variable	line:16
 DEBUG	../app/config.py	/^DEBUG = True$/;"	kind:variable	line:7
 DatabaseError	../east/east/exceptions.py	/^class DatabaseError(BaseAPIException):$/;"	kind:class	line:91
-DeferredCategory	../app/models.py	/^DeferredCategory = DeferredRelation()$/;"	kind:variable	line:41
+DeferredCategory	../app/models.py	/^DeferredCategory = DeferredRelation()$/;"	kind:variable	line:40
 Docs	../east/east/docgen.py	/^class Docs:$/;"	kind:class	line:34
 DocumentationError	../east/east/module.py	/^class DocumentationError(RuntimeError):$/;"	kind:class	line:196
 DoesNotExistError	../east/east/exceptions.py	/^class DoesNotExistError(DatabaseError):$/;"	kind:class	line:106
-EAST_API_DOCS_LOCATION	../app/config.py	/^EAST_API_DOCS_LOCATION = 'docs\/docs.html'$/;"	kind:variable	line:17
-EAST_GENERATE_API_DOCS	../app/config.py	/^EAST_GENERATE_API_DOCS = True$/;"	kind:variable	line:16
+EAST_API_DOCS_LOCATION	../app/config.py	/^EAST_API_DOCS_LOCATION = 'docs\/docs.html'$/;"	kind:variable	line:19
+EAST_GENERATE_API_DOCS	../app/config.py	/^EAST_GENERATE_API_DOCS = False$/;"	kind:variable	line:18
 East	../east/east/module.py	/^class East:$/;"	kind:class	line:22
 EastDatabase	../east/east/database.py	/^class EastDatabase:$/;"	kind:class	line:17
 EastMarkdownParser	../east/east/helpers.py	/^class EastMarkdownParser:$/;"	kind:class	line:125
@@ -39,36 +42,37 @@ EastSqliteDatabase	../east/east/database.py	/^class EastSqliteDatabase(EastDatab
 EastTester	../east/east/testing.py	/^class EastTester:$/;"	kind:class	line:17
 FileSystemError	../east/east/exceptions.py	/^class FileSystemError(BaseAPIException):$/;"	kind:class	line:67
 HTML	../east/east/data.py	/^class HTML(ResponseType):$/;"	kind:class	line:98
-Image	../app/util.py	/^class Image:$/;"	kind:class	line:7
 ImpossibleRelationshipError	../east/east/exceptions.py	/^class ImpossibleRelationshipError(BaseAPIException):$/;"	kind:class	line:111
 IntegrityViolationError	../east/east/exceptions.py	/^class IntegrityViolationError(DatabaseError):$/;"	kind:class	line:96
 JSON	../east/east/data.py	/^class JSON(ResponseType):$/;"	kind:class	line:41
 JWT	../east/east/security.py	/^class JWT:$/;"	kind:class	line:26
 JWTException	../east/east/exceptions.py	/^class JWTException(BaseAPIException):$/;"	kind:class	line:118
 JWT_EXPIRATION_DELTA	../app/config.py	/^JWT_EXPIRATION_DELTA = datetime.timedelta(days=30)$/;"	kind:variable	line:14
+MODELS	../tests.py	/^    MODELS = [models.User, models.Note, models.Category]$/;"	kind:variable	line:40
 MalformedTokenError	../east/east/exceptions.py	/^class MalformedTokenError(JWTException):$/;"	kind:class	line:123
 Meta	../app/models.py	/^    class Meta:$/;"	kind:class	line:13
 MissingParameterError	../east/east/exceptions.py	/^class MissingParameterError(BaseAPIException):$/;"	kind:class	line:84
-NoResponse	../app/util.py	/^class NoResponse(ResponseType):$/;"	kind:class	line:67
-Note	../app/models.py	/^class Note(BBModel):$/;"	kind:class	line:63
+NoResponse	../app/util.py	/^class NoResponse(ResponseType):$/;"	kind:class	line:46
+Note	../app/models.py	/^class Note(BBModel):$/;"	kind:class	line:65
 OrderedDefaultDict	../east/east/helpers.py	/^class OrderedDefaultDict(OrderedDict):$/;"	kind:class	line:82
 RemoteOperationError	../east/east/exceptions.py	/^class RemoteOperationError(BaseAPIException):$/;"	kind:class	line:72
 ResponseType	../east/east/data.py	/^class ResponseType:$/;"	kind:class	line:16
 SECRET_KEY	../app/config.py	/^SECRET_KEY = 'gup%48qsvw+&d4ck4*il-t#-5)*%wn)e$xm+)nmn*es=22q(2d'$/;"	kind:variable	line:12
 STATIC_FOLDER	../app/config.py	/^STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.\/static')$/;"	kind:variable	line:13
-StringValidator	../app/util.py	/^class StringValidator:$/;"	kind:class	line:28
-Success	../app/util.py	/^class Success(ResponseType):$/;"	kind:class	line:47
+StringValidator	../app/util.py	/^class StringValidator:$/;"	kind:class	line:7
+Success	../app/util.py	/^class Success(ResponseType):$/;"	kind:class	line:26
 TESTING	../app/config.py	/^TESTING = False$/;"	kind:variable	line:8
 UnknownUserError	../east/east/exceptions.py	/^class UnknownUserError(JWTException):$/;"	kind:class	line:133
 User	../app/models.py	/^class User(BBModel):$/;"	kind:class	line:17
+UserRegistrationTest	../tests.py	/^class UserRegistrationTest(APITest):$/;"	kind:class	line:117
 ValueNotUniqueError	../east/east/exceptions.py	/^class ValueNotUniqueError(IntegrityViolationError):$/;"	kind:class	line:101
+_TEST_API	../tests.py	/^_TEST_API = API()$/;"	kind:variable	line:77
 _TYPE_MAP	../east/east/database.py	/^    _TYPE_MAP = {IntegerField: 'integer', BigIntegerField: 'Bigint',$/;"	kind:variable	line:48
-__call__	../app/util.py	/^    def __call__(self, parameter):$/;"	kind:member	line:36
+__call__	../app/util.py	/^    def __call__(self, parameter):$/;"	kind:member	line:15
 __copy__	../east/east/helpers.py	/^    def __copy__(self):$/;"	kind:member	line:112
 __deepcopy__	../east/east/helpers.py	/^    def __deepcopy__(self, memo):$/;"	kind:member	line:115
 __getitem__	../east/east/helpers.py	/^    def __getitem__(self, key):$/;"	kind:member	line:90
-__init__	../app/util.py	/^    def __init__(self, file):$/;"	kind:member	line:10
-__init__	../app/util.py	/^    def __init__(self, min_length=None, max_length=None, pattern=None):$/;"	kind:member	line:31
+__init__	../app/util.py	/^    def __init__(self, min_length=None, max_length=None, pattern=None):$/;"	kind:member	line:10
 __init__	../east/east/data.py	/^    def __init__(self, *args, view=None, extras={}):$/;"	kind:member	line:53
 __init__	../east/east/data.py	/^    def __init__(self, template, *args, **kwargs):$/;"	kind:member	line:104
 __init__	../east/east/docgen.py	/^    def __init__(self, config):$/;"	kind:member	line:37
@@ -79,57 +83,71 @@ __init__	../east/east/helpers.py	/^    def __init__(self, default_factory=None, 
 __init__	../east/east/module.py	/^    def __init__(self, flask_app):$/;"	kind:member	line:29
 __init__	../east/east/security.py	/^    def __init__(self, app, get_identity_handler=None):$/;"	kind:member	line:42
 __init__	../east/east/testing.py	/^    def __init__(self, app, base_url):$/;"	kind:member	line:20
+__init__	../tests.py	/^    def __init__(self):$/;"	kind:member	line:42
+__init__	../tests.py	/^    def __init__(self, methodName='runTest'):$/;"	kind:member	line:82
 __init__.py	../app/__init__.py	1;"	kind:file	line:1
 __init__.py	../east/east/__init__.py	1;"	kind:file	line:1
 __missing__	../east/east/helpers.py	/^    def __missing__(self, key):$/;"	kind:member	line:96
 __reduce__	../east/east/helpers.py	/^    def __reduce__(self):$/;"	kind:member	line:102
 __repr__	../east/east/helpers.py	/^    def __repr__(self):$/;"	kind:member	line:120
-__serialization__	../app/models.py	/^    __serialization__ = {$/;"	kind:variable	line:23
-__serialization__	../app/models.py	/^    __serialization__ = {$/;"	kind:variable	line:49
+__serialization__	../app/models.py	/^    __serialization__ = {$/;"	kind:variable	line:22
+__serialization__	../app/models.py	/^    __serialization__ = {$/;"	kind:variable	line:47
 __serialization__	../app/models.py	/^    __serialization__ = {$/;"	kind:variable	line:73
 __str__	../east/east/exceptions.py	/^    def __str__(self):$/;"	kind:member	line:27
-_author	../app/models.py	/^    _author = ForeignKeyField(User, related_name='notes', on_delete='CASCADE')$/;"	kind:variable	line:66
-_category	../app/models.py	/^    _category = ForeignKeyField(Category, related_name='notes', on_delete='CASCADE')$/;"	kind:variable	line:67
-_category_parent	../app/models.py	/^def _category_parent(self, view=None) -> (Category, 'basic'):$/;"	kind:function	line:55
+_author	../app/models.py	/^    _author = ForeignKeyField(User, related_name='notes', on_delete='CASCADE')$/;"	kind:variable	line:68
+_category	../app/models.py	/^    _category = ForeignKeyField(Category, related_name='notes', on_delete='CASCADE')$/;"	kind:variable	line:69
+_category_parent	../app/models.py	/^def _category_parent(self, view=None) -> (Category, 'basic'):$/;"	kind:function	line:57
 _document	../east/east/data.py	/^    def _document(self):$/;"	kind:member	line:78
 _format	../east/east/data.py	/^    def _format(self, obj):$/;"	kind:member	line:65
 _get_request_param	../east/east/module.py	/^def _get_request_param(name: str):$/;"	kind:function	line:185
 _jwt	../east/east/security.py	/^_jwt = LocalProxy(lambda: current_app.extensions['jwt'])$/;"	kind:variable	line:23
-_parent	../app/models.py	/^    _parent = ForeignKeyField(DeferredCategory, related_name='children')$/;"	kind:variable	line:45
+_parent	../app/models.py	/^    _parent = ForeignKeyField(DeferredCategory, related_name='children', null=True)$/;"	kind:variable	line:44
+_send_request	../tests.py	/^def _send_request(app, url, method='GET', data={}, headers={}, jwt_token=None):$/;"	kind:function	line:31
 _serve_docs	../east/east/module.py	/^    def _serve_docs(self):$/;"	kind:member	line:179
+_validate_format	../tests.py	/^def _validate_format(form, obj):$/;"	kind:function	line:20
 active_user	../east/east/security.py	/^def active_user():$/;"	kind:function	line:109
-add_note	../app/views.py	/^def add_note(title: str, content: str, category_id: int) -> Success:$/;"	kind:function	line:156
-api	../app/views.py	/^api = Blueprint('api', __name__)$/;"	kind:variable	line:14
-api_descr	../app/views.py	/^    api_descr = ('_**Last generated:** %s_' % datetime.now()) + '\\n\\n' + api_descr$/;"	kind:variable	line:243
-api_descr	../app/views.py	/^    api_descr = open('app\/static\/general.md', 'r').read()$/;"	kind:variable	line:242
+add_category	../app/views.py	/^def add_category(name: str, parent: str = None) -> Success:$/;"	kind:function	line:234
+add_note	../app/views.py	/^def add_note(title: str, content: str, category: str) -> Success:$/;"	kind:function	line:135
+api	../app/views.py	/^api = Blueprint('api', __name__)$/;"	kind:variable	line:19
+api_descr	../app/views.py	/^    api_descr = ('_**Last generated:** %s_' % datetime.now()) + '\\n\\n' + api_descr$/;"	kind:variable	line:326
+api_descr	../app/views.py	/^    api_descr = open('app\/static\/general.md', 'r').read()$/;"	kind:variable	line:325
 app	../app/__init__.py	/^app = Flask(__name__)$/;"	kind:variable	line:4
-authenticate	../app/models.py	/^    def authenticate(cls, email, password):$/;"	kind:member	line:29
+authenticate	../app/models.py	/^    def authenticate(cls, email, password):$/;"	kind:member	line:28
 author	../east/setup.py	/^    author='Zvonimir Jurelinac',$/;"	kind:variable	line:16
 author_email	../east/setup.py	/^    author_email='zjurelinac@gmail.com',$/;"	kind:variable	line:17
 block_code	../east/east/helpers.py	/^            def block_code(self, code, lang):$/;"	kind:member	line:142
 category	../app/models.py	/^    def category(self, view=None) -> (Category, 'basic'):$/;"	kind:member	line:78
+check_data	../tests.py	/^    def check_data(self, url, method='GET', data={}, headers={},$/;"	kind:member	line:104
+check_error	../tests.py	/^    def check_error(self, url, method='GET', data={}, headers={},$/;"	kind:member	line:98
+check_success	../tests.py	/^    def check_success(self, url, method='GET', data={}, headers={},$/;"	kind:member	line:93
+clear_db	../tests.py	/^    def clear_db(self):$/;"	kind:member	line:62
 clear_json_quotes	../east/east/helpers.py	/^def clear_json_quotes(json_data):$/;"	kind:function	line:44
 clear_jwt_token	../east/east/testing.py	/^    def clear_jwt_token(self):$/;"	kind:member	line:65
 config.py	../app/config.py	1;"	kind:file	line:1
-content	../app/models.py	/^    content = TextField()$/;"	kind:variable	line:65
-content_type	../app/util.py	/^    content_type = 'application\/json'$/;"	kind:variable	line:50
-content_type	../app/util.py	/^    content_type = 'application\/json'$/;"	kind:variable	line:70
+content	../app/models.py	/^    content = TextField()$/;"	kind:variable	line:67
+content_type	../app/util.py	/^    content_type = 'application\/json'$/;"	kind:variable	line:29
+content_type	../app/util.py	/^    content_type = 'application\/json'$/;"	kind:variable	line:49
 content_type	../east/east/data.py	/^    content_type = 'application\/json'$/;"	kind:variable	line:49
 content_type	../east/east/data.py	/^    content_type = 'text\/html'$/;"	kind:variable	line:101
 content_type	../east/east/data.py	/^    content_type = 'text\/plain'$/;"	kind:variable	line:21
 copy	../east/east/helpers.py	/^    def copy(self):$/;"	kind:member	line:109
+create_user	../tests.py	/^    def create_user(self, fullname):$/;"	kind:member	line:65
+create_user_category	../tests.py	/^    def create_user_category(self, user, name, parent):$/;"	kind:member	line:73
+create_user_note	../tests.py	/^    def create_user_note(self, user, title, content, category):$/;"	kind:member	line:69
 data.py	../east/east/data.py	1;"	kind:file	line:1
 database	../app/models.py	/^        database = db$/;"	kind:variable	line:14
 database.py	../east/east/database.py	1;"	kind:file	line:1
-date_added	../app/models.py	/^    date_added = DateTimeField()$/;"	kind:variable	line:68
-date_modified	../app/models.py	/^    date_modified = DateTimeField()$/;"	kind:variable	line:69
-db	../app/__init__.py	/^db = EastSqliteDatabase('store.db')$/;"	kind:variable	line:7
+date_created	../app/models.py	/^    date_created = DateTimeField()$/;"	kind:variable	line:70
+date_modified	../app/models.py	/^    date_modified = DateTimeField()$/;"	kind:variable	line:71
+db	../app/__init__.py	/^db = EastSqliteDatabase(app.config['DATABASE'])$/;"	kind:variable	line:7
 decorated_function	../east/east/module.py	/^            def decorated_function(*args, **parsed_params):$/;"	kind:function	line:144
 decorated_function	../east/east/security.py	/^    def decorated_function(*args, **kwargs):$/;"	kind:function	line:64
 decorator	../east/east/module.py	/^        def decorator(f):$/;"	kind:function	line:112
-delete_profile	../app/views.py	/^def delete_profile() -> NoResponse:$/;"	kind:function	line:130
-description	../app/util.py	/^    description = 'Empty response'$/;"	kind:variable	line:71
-description	../app/util.py	/^    description = 'Success response'$/;"	kind:variable	line:51
+delete_category	../app/views.py	/^def delete_category(category_id) -> NoResponse:$/;"	kind:function	line:299
+delete_note	../app/views.py	/^def delete_note(note_id) -> NoResponse:$/;"	kind:function	line:202
+delete_profile	../app/views.py	/^def delete_profile() -> NoResponse:$/;"	kind:function	line:103
+description	../app/util.py	/^    description = 'Empty response'$/;"	kind:variable	line:50
+description	../app/util.py	/^    description = 'Success response'$/;"	kind:variable	line:30
 description	../east/east/data.py	/^    description = 'HTML response'$/;"	kind:variable	line:102
 description	../east/east/data.py	/^    description = 'JSON-formatted response'$/;"	kind:variable	line:50
 description	../east/east/data.py	/^    description = 'Response description'$/;"	kind:variable	line:22
@@ -139,8 +157,8 @@ description	../east/east/exceptions.py	/^    description = 'There is no register
 description	../east/east/exceptions.py	/^    description = 'This feature of the API is not yet implemented.'$/;"	kind:variable	line:57
 description	../east/setup.py	/^    description='Flask extension for creating REST APIs',$/;"	kind:variable	line:15
 docgen.py	../east/east/docgen.py	1;"	kind:file	line:1
-document	../app/util.py	/^    def document(cls):$/;"	kind:member	line:59
-document	../app/util.py	/^    def document(cls):$/;"	kind:member	line:79
+document	../app/util.py	/^    def document(cls):$/;"	kind:member	line:38
+document	../app/util.py	/^    def document(cls):$/;"	kind:member	line:58
 document	../east/east/data.py	/^    def document(cls):$/;"	kind:member	line:31
 document_api	../east/east/docgen.py	/^    def document_api(self, api_doc):$/;"	kind:member	line:54
 document_api	../east/east/module.py	/^    def document_api(self, name: str, version: str, description: str, **kwargs):$/;"	kind:member	line:45
@@ -151,13 +169,14 @@ document_region	../east/east/module.py	/^    def document_region(self, region, n
 document_response	../east/east/database.py	/^    def document_response(cls, view):$/;"	kind:member	line:65
 document_route	../east/east/docgen.py	/^    def document_route(self, region, route_doc):$/;"	kind:member	line:45
 east	../app/__init__.py	/^east = East(app)$/;"	kind:variable	line:14
-edit_note	../app/views.py	/^def edit_note(note_id: int, title: str = None, content: str = None,$/;"	kind:function	line:191
-edit_profile	../app/views.py	/^def edit_profile(fullname: str = None, email: str = None,$/;"	kind:function	line:106
+edit_category	../app/views.py	/^def edit_category(category_id, name: str = None,$/;"	kind:function	line:271
+edit_note	../app/views.py	/^def edit_note(note_id, title: str = None, content: str = None,$/;"	kind:function	line:172
+edit_profile	../app/views.py	/^def edit_profile(fullname: str = None, email: str = None,$/;"	kind:function	line:79
 email	../app/models.py	/^    email = CharField(max_length=256, unique=True)$/;"	kind:variable	line:19
 exceptions	../east/east/database.py	/^    exceptions = {$/;"	kind:variable	line:18
 exceptions.py	../east/east/exceptions.py	1;"	kind:file	line:1
-format	../app/util.py	/^    def format(cls, obj):$/;"	kind:member	line:55
-format	../app/util.py	/^    def format(cls, obj):$/;"	kind:member	line:75
+format	../app/util.py	/^    def format(cls, obj):$/;"	kind:member	line:34
+format	../app/util.py	/^    def format(cls, obj):$/;"	kind:member	line:54
 format	../east/east/data.py	/^    def format(cls, obj):$/;"	kind:member	line:26
 format	../east/east/data.py	/^    def format(cls, obj):$/;"	kind:member	line:62
 format	../east/east/data.py	/^    def format(self, obj):$/;"	kind:member	line:107
@@ -165,10 +184,10 @@ fullname	../app/models.py	/^    fullname = CharField(max_length=255)$/;"	kind:va
 generate	../east/east/docgen.py	/^    def generate(self):$/;"	kind:member	line:57
 generate_access_token	../east/east/security.py	/^def generate_access_token(user_id, **extras):$/;"	kind:function	line:95
 generate_docs	../east/east/module.py	/^    def generate_docs(self):$/;"	kind:member	line:175
+get_category	../app/views.py	/^def get_category(category_id) -> JSON(Category, view='full'):$/;"	kind:function	line:252
 get_class_plural_name	../east/east/helpers.py	/^def get_class_plural_name(cls):$/;"	kind:function	line:57
-get_note	../app/views.py	/^def get_note(note_id: int) -> JSON(Note, view='full'):$/;"	kind:function	line:172
-get_note	../app/views.py	/^def get_note(note_id: int) -> JSON(Note, view='full'):$/;"	kind:function	line:218
-get_profile	../app/views.py	/^def get_profile() -> JSON(User, view='profile'):$/;"	kind:function	line:92
+get_note	../app/views.py	/^def get_note(note_id) -> JSON(Note, view='full'):$/;"	kind:function	line:153
+get_profile	../app/views.py	/^def get_profile() -> JSON(User, view='profile'):$/;"	kind:function	line:65
 handle_404_error	../app/handlers.py	/^def handle_404_error(e):$/;"	kind:function	line:29
 handle_405_error	../app/handlers.py	/^def handle_405_error(e):$/;"	kind:function	line:35
 handle_api_errors	../app/handlers.py	/^def handle_api_errors(e):$/;"	kind:function	line:15
@@ -181,7 +200,8 @@ jwt	../app/__init__.py	/^jwt = JWT(app, lambda payload: User.get(User.id == payl
 jwt_required	../east/east/security.py	/^def jwt_required(f):$/;"	kind:function	line:55
 keywords	../east/setup.py	/^    keywords='flask rest',$/;"	kind:variable	line:20
 license	../east/setup.py	/^    license='MIT',$/;"	kind:variable	line:19
-list_notes	../app/views.py	/^def list_notes(start: int = 0, limit: int = 20) -> JSON([Note], view='excerpt'):$/;"	kind:function	line:144
+list_categories	../app/views.py	/^def list_categories() -> JSON([Category], view='extended'):$/;"	kind:function	line:222
+list_notes	../app/views.py	/^def list_notes(category: str = None, start: int = 0, limit: int = 20) -> JSON([Note], view='excerpt'):$/;"	kind:function	line:117
 logger	../app/handlers.py	/^logger = logging.getLogger(__name__)$/;"	kind:variable	line:11
 make_error_doc	../east/east/docgen.py	/^    def make_error_doc(self, name):$/;"	kind:member	line:125
 make_password_hash	../east/east/security.py	/^def make_password_hash(password):$/;"	kind:function	line:114
@@ -191,31 +211,34 @@ make_response_doc	../east/east/docgen.py	/^    def make_response_doc(self, respo
 make_route_doc	../east/east/docgen.py	/^    def make_route_doc(self, route):$/;"	kind:member	line:81
 models.py	../app/models.py	1;"	kind:file	line:1
 module.py	../east/east/module.py	1;"	kind:file	line:1
-name	../app/models.py	/^    name = CharField(64)$/;"	kind:variable	line:44
+name	../app/models.py	/^    name = CharField(max_length=64, unique=True)$/;"	kind:variable	line:43
 name	../east/east/exceptions.py	/^    def name(self):$/;"	kind:member	line:37
 name	../east/setup.py	/^    name='east',$/;"	kind:variable	line:13
+notes_count	../app/models.py	/^    def notes_count(self, view=None) -> int:$/;"	kind:member	line:53
 obj_compare	../east/east/testing.py	/^def obj_compare(source, dest):$/;"	kind:function	line:69
-obtain_access_token	../app/views.py	/^def obtain_access_token(email: str, password: str) -> JSON:$/;"	kind:function	line:17
-owner	../app/models.py	/^    owner = ForeignKeyField(User, related_name='categories', on_delete='CASCADE')$/;"	kind:variable	line:46
+obtain_access_token	../app/views.py	/^def obtain_access_token(email: str, password: str) -> JSON:$/;"	kind:function	line:22
+owner	../app/models.py	/^    owner = ForeignKeyField(User, related_name='categories', on_delete='CASCADE')$/;"	kind:variable	line:45
 package_data	../east/setup.py	/^    package_data={$/;"	kind:variable	line:24
 packages	../east/setup.py	/^    packages=find_packages(),$/;"	kind:variable	line:21
 parse_argdict	../east/east/helpers.py	/^def parse_argdict(extras):$/;"	kind:function	line:69
-password_hash	../app/models.py	/^    password_hash = CharField()$/;"	kind:variable	line:21
-profile_image	../app/models.py	/^    profile_image = CharField(max_length=2048, null=True)$/;"	kind:variable	line:20
+password_hash	../app/models.py	/^    password_hash = CharField()$/;"	kind:variable	line:20
+rand_str	../tests.py	/^def rand_str(n):$/;"	kind:function	line:16
 register_exceptions	../east/east/module.py	/^    def register_exceptions(self, exceptions):$/;"	kind:member	line:95
-register_user	../app/views.py	/^def register_user(fullname: str, email: str, password: str) -> Success:$/;"	kind:function	line:43
+register_user	../app/views.py	/^def register_user(fullname: str, email: str, password: str) -> Success:$/;"	kind:function	line:48
 register_validator	../east/east/module.py	/^    def register_validator(self, param_name: str, param_validator):$/;"	kind:member	line:41
 render	../east/east/helpers.py	/^    def render(self, raw, create_toc=False):$/;"	kind:member	line:169
 reset_toc	../east/east/helpers.py	/^            def reset_toc(self):$/;"	kind:member	line:158
 route	../east/east/module.py	/^    def route(self, base, url_rule: str, method: str = 'GET', auth: str = None):$/;"	kind:member	line:100
 run.py	../run.py	1;"	kind:file	line:1
-save	../app/util.py	/^    def save(self):$/;"	kind:member	line:16
 security.py	../east/east/security.py	1;"	kind:file	line:1
+send_request	../tests.py	/^    def send_request(self, url, method='GET', data={}, headers={}, jwt_token=None):$/;"	kind:member	line:51
 serialize	../east/east/helpers.py	/^def serialize(obj, *args):$/;"	kind:function	line:22
+setUp	../tests.py	/^    def setUp(self):$/;"	kind:member	line:87
 set_jwt_token	../east/east/testing.py	/^    def set_jwt_token(self, token):$/;"	kind:member	line:62
+set_user	../tests.py	/^    def set_user(self, user):$/;"	kind:member	line:58
 setup.py	../east/setup.py	1;"	kind:file	line:1
-status	../app/util.py	/^    status = 200$/;"	kind:variable	line:52
-status	../app/util.py	/^    status = 204$/;"	kind:variable	line:72
+status	../app/util.py	/^    status = 200$/;"	kind:variable	line:31
+status	../app/util.py	/^    status = 204$/;"	kind:variable	line:51
 status	../east/east/data.py	/^    status = 200$/;"	kind:variable	line:23
 status	../east/east/data.py	/^    status = 200$/;"	kind:variable	line:51
 status_code	../east/east/exceptions.py	/^    status_code = 400$/;"	kind:variable	line:113
@@ -237,11 +260,17 @@ status_code	../east/east/exceptions.py	/^    status_code = 500$/;"	kind:variable
 status_code	../east/east/exceptions.py	/^    status_code = 500$/;"	kind:variable	line:74
 status_code	../east/east/exceptions.py	/^    status_code = 500$/;"	kind:variable	line:93
 status_code	../east/east/exceptions.py	/^    status_code = 501$/;"	kind:variable	line:58
+tearDown	../tests.py	/^    def tearDown(self):$/;"	kind:member	line:90
 test_data	../east/east/testing.py	/^    def test_data(self, url, method='GET', data={}, headers={},$/;"	kind:member	line:49
 test_error	../east/east/testing.py	/^    def test_error(self, url, method='GET', data={}, headers={}, error=None):$/;"	kind:member	line:44
+test_registration_bad_param	../tests.py	/^    def test_registration_bad_param(self):$/;"	kind:member	line:128
+test_registration_integrity_violation	../tests.py	/^    def test_registration_integrity_violation(self):$/;"	kind:member	line:133
+test_registration_missing_param	../tests.py	/^    def test_registration_missing_param(self):$/;"	kind:member	line:123
+test_registration_ok	../tests.py	/^    def test_registration_ok(self):$/;"	kind:member	line:118
 test_success	../east/east/testing.py	/^    def test_success(self, url, method='GET', data={}, headers={},$/;"	kind:member	line:38
 testing.py	../east/east/testing.py	1;"	kind:file	line:1
-title	../app/models.py	/^    title = CharField(max_length=255)$/;"	kind:variable	line:64
+tests.py	../tests.py	1;"	kind:file	line:1
+title	../app/models.py	/^    title = CharField(max_length=255)$/;"	kind:variable	line:66
 to_attr_jsontype	../east/east/database.py	/^    def to_attr_jsontype(cls, attr, view=None):$/;"	kind:member	line:74
 to_jsondict	../east/east/database.py	/^    def to_jsondict(self, view=''):$/;"	kind:member	line:56
 to_jsondict	../east/east/helpers.py	/^def to_jsondict(obj, view=''):$/;"	kind:function	line:28

@@ -12,7 +12,7 @@
         <div class="o-main" id="general">
             <header class="o-main-header">
                 <h1 class="c-api-name">API Documentation <span class="c-api-version">v1.0</span></h1>
-                <div class="c-api-description s-markdown s-markdown--main"><p><em><strong>Last generated:</strong> 2017-11-07 21:25:54.936550</em></p>
+                <div class="c-api-description s-markdown s-markdown--main"><p><em><strong>Last generated:</strong> 2017-11-10 10:30:55.694763</em></p>
 <p><em>Take notes without pen and paper - use only bits</em></p>
 <h2 id="h-0">Basic idea</h2>
 <p><strong>BitBoard</strong> is (for now) just another web app for taking notes, but in the future it might turn into something more.</p>
@@ -679,18 +679,18 @@ categories.</p>
                                 
                                 <div class="c-route-error">
                                     <div class="c-route-error__main">
-                                        <div class="c-route-error__name">MissingParameterError</div>
-                                        <div class="c-route-error__code">400</div>
-                                    </div>
-                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
-                                </div>
-                                
-                                <div class="c-route-error">
-                                    <div class="c-route-error__main">
                                         <div class="c-route-error__name">DoesNotExistError</div>
                                         <div class="c-route-error__code">404</div>
                                     </div>
                                     <div class="c-route-error__description">Requested object does not exist in the database.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">MissingParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
                                 </div>
                                 
                             </div>
@@ -909,18 +909,18 @@ representation.</p>
                                 
                                 <div class="c-route-error">
                                     <div class="c-route-error__main">
-                                        <div class="c-route-error__name">DoesNotExistError</div>
-                                        <div class="c-route-error__code">404</div>
-                                    </div>
-                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
-                                </div>
-                                
-                                <div class="c-route-error">
-                                    <div class="c-route-error__main">
                                         <div class="c-route-error__name">BadParameterError</div>
                                         <div class="c-route-error__code">400</div>
                                     </div>
                                     <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
                                 </div>
                                 
                             </div>
@@ -1076,7 +1076,7 @@ representation.</p>
                                         
                                     </div>
                                     <div class="c-route-parameter__extra">
-                                        <div class="c-route-parameter__description"><p>Category name, visible to the user.</p>
+                                        <div class="c-route-parameter__description"><p>Category name, visible to the user. <strong>Maximum length: 64 characters.</strong></p>
 </div>
                                         
                                         
@@ -1127,18 +1127,18 @@ representation.</p>
                                 
                                 <div class="c-route-error">
                                     <div class="c-route-error__main">
-                                        <div class="c-route-error__name">MissingParameterError</div>
-                                        <div class="c-route-error__code">400</div>
-                                    </div>
-                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
-                                </div>
-                                
-                                <div class="c-route-error">
-                                    <div class="c-route-error__main">
                                         <div class="c-route-error__name">BadParameterError</div>
                                         <div class="c-route-error__code">400</div>
                                     </div>
                                     <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">MissingParameterError</div>
+                                        <div class="c-route-error__code">400</div>
+                                    </div>
+                                    <div class="c-route-error__description">Required parameter is missing from the request.</div>
                                 </div>
                                 
                             </div>
@@ -1210,6 +1210,14 @@ category.</p>
                                 
                                 <div class="c-route-error">
                                     <div class="c-route-error__main">
+                                        <div class="c-route-error__name">AuthorizationError</div>
+                                        <div class="c-route-error__code">403</div>
+                                    </div>
+                                    <div class="c-route-error__description">User not allowed to perform this operation.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
                                         <div class="c-route-error__name">DoesNotExistError</div>
                                         <div class="c-route-error__code">404</div>
                                     </div>
@@ -1261,7 +1269,7 @@ category.</p>
                                         
                                     </div>
                                     <div class="c-route-parameter__extra">
-                                        <div class="c-route-parameter__description"><p>Category name, visible to the user.</p>
+                                        <div class="c-route-parameter__description"><p>Category name, visible to the user. <strong>Maximum length: 64 characters.</strong></p>
 </div>
                                         
                                         
@@ -1328,18 +1336,18 @@ category.</p>
                                 
                                 <div class="c-route-error">
                                     <div class="c-route-error__main">
-                                        <div class="c-route-error__name">DoesNotExistError</div>
-                                        <div class="c-route-error__code">404</div>
-                                    </div>
-                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
-                                </div>
-                                
-                                <div class="c-route-error">
-                                    <div class="c-route-error__main">
                                         <div class="c-route-error__name">BadParameterError</div>
                                         <div class="c-route-error__code">400</div>
                                     </div>
                                     <div class="c-route-error__description">Request parameter is invalid.</div>
+                                </div>
+                                
+                                <div class="c-route-error">
+                                    <div class="c-route-error__main">
+                                        <div class="c-route-error__name">DoesNotExistError</div>
+                                        <div class="c-route-error__code">404</div>
+                                    </div>
+                                    <div class="c-route-error__description">Requested object does not exist in the database.</div>
                                 </div>
                                 
                             </div>

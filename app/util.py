@@ -4,27 +4,6 @@ from east.exceptions import *
 from east.data import ResponseType
 
 
-class Image:
-    """Image file representation"""
-
-    def __init__(self, file):
-        if not ('.' in file.filename and file.filename.rsplit('.', 1)[1] in current_app.config['ALLOWED_EXTENSIONS']):
-            raise TypeError('Unsupported image file type `%s`.' % file.filename)
-
-        self.file = file
-
-    def save(self):
-        """Save given image file on server and return it's location"""
-        extension = self.file.filename.rsplit('.', maxsplit=1)[1]
-        filename = str(uuid.uuid4()) + '.' + extension
-        filepath = os.path.join(current_app.config['IMAGE_FOLDER'], filename)
-        try:
-            self.file.save(filepath)
-            return filename
-        except Exception as e:
-            raise FileSystemError(str(e))
-
-
 class StringValidator:
     """String input parameters validator object"""
 
