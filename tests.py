@@ -224,6 +224,11 @@ class NoteTest(APITest):
         resp = self.check_success('/api/categories/stuff/notes', 'POST', data={'title': 'Test note', 'content': rand_str(100)}, expected_status=201)
         self.assertIn('Location', resp.headers)
 
+    def test_add_unauthorized(self):
+        user2 = self.api.create_user('Slavko Slavkovic')
+        self.api.set_user(user2)
+        self.check_error('/api/categories/stuff/notes', 'POST', data={'title': 'Test note', 'content': rand_str(100)}, error=AuthorizationError)
+
     def test_add_bad_param(self):
         self.check_error('/api/categories/stuff/notes', 'POST', data={'title': rand_str(256), 'content': rand_str(100)}, error=BadParameterError)
 

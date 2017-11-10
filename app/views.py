@@ -247,10 +247,14 @@ def add_note(category_name, title: str, content: str) -> Success:
 
     Adds a new note to the user's board. Note's `content` can be Markdown-formatted.
 
-    @exceptions: BadParameterError, DoesNotExistError, MissingParameterError
+    @exceptions: AuthorizationError, BadParameterError, DoesNotExistError, MissingParameterError
     @response_status: 201
     """
     category = Category.get(Category.name == category_name)
+
+    if category.owner != active_user():
+        raise AuthorizationError('Not allowed to add notes to this category.')
+
     note = Note.create(title=title, content=content, _category=category,
                        _author=active_user(), date_created=datetime.now(),
                        date_modified=datetime.now())
@@ -352,7 +356,7 @@ if app.config['EAST_GENERATE_API_DOCS']:
     east.document_parameter('content', str, 'Note\'s content, either plain text or Markdown-formatted. Unlimited length.')
     east.document_parameter('category', str, 'Name of note\'s category', example='Household')
 
-    east.document_parameter('category_name', int, 'Unique category name', location='path', example='School')
+    east.document_parameter('category_name', str, 'Unique category name', location='path', example='School')
     east.document_parameter('name', str, 'Category name, visible to the user. **Maximum length: 64 characters.**', example='Programming Tips & Tricks')
     east.document_parameter('parent', str, 'Parent category\'s name, can be left empty if the category has no parent.', example='Computer Science')
 
